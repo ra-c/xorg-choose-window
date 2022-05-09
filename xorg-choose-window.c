@@ -382,8 +382,9 @@ void xorg_draw_text_centred (
         xcw_die("query_text_extents\n");
     }
 
-    int x = (win_rect->width - qter->overall_width) / 2;
-    int y = (win_rect->height - qter->font_ascent - qter->font_descent) / 2;
+    //another magic
+    int x = (70 - qter->overall_width) / 2;
+    int y = (20 - qter->font_ascent - qter->font_descent) / 2;
     xcb_image_text_8(xcon, size, win, gc, x, y + qter->font_ascent, text);
 }
 
@@ -825,7 +826,7 @@ xcb_window_t* overlay_create (xcw_state_t* state, int x, int y, int w, int h) {
 
     xcb_icccm_set_wm_class(
         state->xcon, *win, sizeof(OVERLAY_WINDOW_CLASS), OVERLAY_WINDOW_CLASS);
-    xorg_window_move_resize(state->xcon, *win, x, y, w, h);
+    xorg_window_move_resize(state->xcon, *win, x, y, 70, 20); //magic magic magic
     xcb_void_cookie_t mwc = xcb_map_window_checked(state->xcon, *win);
     xorg_check_request(state->xcon, mwc, "map_window");
     return win;
